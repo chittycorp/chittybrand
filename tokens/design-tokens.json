@@ -1,0 +1,84 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "brand": "ChittyOS",
+  "version": "1.0.0",
+  "color": {
+    "indigo": {
+      "50": "#EEF2FF",
+      "100": "#E0E7FF",
+      "200": "#C7D2FE",
+      "300": "#A5B4FC",
+      "400": "#818CF8",
+      "500": "#6366F1",
+      "600": "#4F46E5",
+      "700": "#4338CA",
+      "800": "#3730A3",
+      "900": "#312E81",
+      "950": "#1E1B4B"
+    },
+    "violet": {
+      "400": "#A78BFA",
+      "500": "#8B5CF6",
+      "600": "#7C3AED"
+    },
+    "surface": {
+      "light": "#FFFFFF",
+      "dark": "#0F0F1A"
+    },
+    "semantic": {
+      "destructive": "#EF4444",
+      "success": "#10B981",
+      "warning": "#F59E0B"
+    },
+    "gradient": {
+      "primary": "linear-gradient(135deg, #6366F1, #8B5CF6)",
+      "subtle": "linear-gradient(135deg, #4F46E5, #6366F1)"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": "Syne",
+      "body": "Figtree",
+      "code": "JetBrains Mono"
+    },
+    "fontWeight": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700,
+      "extrabold": 800
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem"
+    },
+    "googleFontsImport": "@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap');"
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem"
+  },
+  "radius": {
+    "sm": "0.25rem",
+    "md": "0.5rem",
+    "lg": "0.75rem",
+    "xl": "1rem",
+    "full": "9999px"
+  },
+  "shadow": {
+    "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "md": "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+    "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+    "glow": "0 0 20px rgb(99 102 241 / 0.3)"
+  }
+}
