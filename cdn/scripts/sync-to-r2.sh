@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # Sync brand assets from repo root into R2 bucket
-# Usage: ./scripts/sync-to-r2.sh [--env production]
+# Usage: ./scripts/sync-to-r2.sh [production]
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 BUCKET="chitty-brand-assets"
-ENV_FLAG="${1:-}"
+ENV="${1:-}"
 
 upload() {
   local src="$1" key="$2"
   echo "  $key"
-  if [ -n "$ENV_FLAG" ]; then
-    npx wrangler r2 object put "$BUCKET/$key" --file "$src" $ENV_FLAG
+  if [ -n "$ENV" ]; then
+    npx wrangler r2 object put "$BUCKET/$key" --file "$src" --remote
   else
-    npx wrangler r2 object put "$BUCKET/$key" --file "$src"
+    npx wrangler r2 object put "$BUCKET/$key" --file "$src" --remote
   fi
 }
 
