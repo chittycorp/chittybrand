@@ -2,8 +2,13 @@
 uri: chittycanon://docs/tech/arch/chittybrand
 namespace: chittycanon://docs/tech
 type: architecture
+title: ChittyBrand Architecture
+author: ChittyCorp
+created: 2026-03-24
 version: 1.0.0
 status: DRAFT
+visibility: public
+registered_with: chittycanon://core/services/canon
 ---
 
 # ChittyBrand Architecture
