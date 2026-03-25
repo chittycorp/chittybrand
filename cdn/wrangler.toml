@@ -13,7 +13,8 @@ bucket_name = "chitty-brand-assets"
 # Production
 [env.production]
 routes = [
-  { pattern = "brand.chitty.cc", custom_domain = true }
+  { pattern = "brand.chitty.cc", custom_domain = true },
+  { pattern = "chitty.cc/*", zone_name = "chitty.cc" }
 ]
 
 [env.production.vars]
