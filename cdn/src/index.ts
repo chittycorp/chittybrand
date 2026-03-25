@@ -8,6 +8,50 @@ interface Env {
   ENVIRONMENT: string;
 }
 
+interface ServiceMeta {
+  name: string;
+  description: string;
+  domain: string;
+}
+
+// Ecosystem service metadata for OG image generation
+const SERVICES: Record<string, ServiceMeta> = {
+  'chittyid':        { name: 'ChittyID',        description: 'Universal entity identity — the trust anchor for all ChittyOS services',         domain: 'id' },
+  'chittytrust':     { name: 'ChittyTrust',      description: 'Trust resolution and scoring across the ChittyOS ecosystem',                     domain: 'trust' },
+  'chittyauth':      { name: 'ChittyAuth',       description: 'Authentication and authorization for ChittyOS services',                         domain: 'auth' },
+  'chittycert':      { name: 'ChittyCert',       description: 'Service certification and compliance verification',                              domain: 'cert' },
+  'chittyregister':  { name: 'ChittyRegister',   description: 'Service registration and ecosystem onboarding',                                  domain: 'register' },
+  'chittyconnect':   { name: 'ChittyConnect',    description: 'AI-intelligent spine — REST API, MCP server, GitHub App',                        domain: 'connect' },
+  'chittyrouter':    { name: 'ChittyRouter',     description: 'Intelligent gateway with AI-powered routing and circuit breaking',                domain: 'router' },
+  'chittyapi':       { name: 'ChittyAPI',        description: 'Unified API gateway for the ChittyOS platform',                                  domain: 'api' },
+  'chittymonitor':   { name: 'ChittyMonitor',    description: 'Observability and health monitoring across all services',                         domain: 'monitor' },
+  'chittyevidence':  { name: 'ChittyEvidence',   description: 'Evidence processing, chain of custody, and forensic analysis',                    domain: 'evidence' },
+  'chittyintel':     { name: 'ChittyIntel',      description: 'Intelligence analysis and pattern detection',                                    domain: 'intel' },
+  'chittyscore':     { name: 'ChittyScore',      description: 'Trust scoring and reputation computation',                                       domain: 'score' },
+  'chittycases':     { name: 'ChittyCases',      description: 'Case management for legal and compliance workflows',                             domain: 'cases' },
+  'chittydashboard': { name: 'ChittyDashboard',  description: 'Unified dashboard for ecosystem visibility',                                     domain: 'dashboard' },
+  'chittyregistry':  { name: 'ChittyRegistry',   description: 'Universal service registry with discovery and AI recommendations',               domain: 'registry' },
+  'chittymcp':       { name: 'ChittyMCP',        description: 'Model Context Protocol servers for Claude integration',                          domain: 'mcp' },
+  'chittymarket':    { name: 'ChittyMarket',     description: 'Claude Code marketplace — skills, agents, hooks, MCP servers',                   domain: 'market' },
+  'chittycore':      { name: 'ChittyCore',       description: 'Shared @chittyos/core package — ID, auth, brand, canon, agents',                 domain: 'core' },
+  'chittycanon':     { name: 'ChittyCanon',      description: 'Canonical governance, ontology, and pattern standards',                          domain: 'canon' },
+  'chittybrand':     { name: 'ChittyBrand',      description: 'Official brand assets and design tokens for the ecosystem',                      domain: 'brand' },
+  'chittyos':        { name: 'ChittyOS',         description: 'Trust infrastructure and intelligent operating system',                          domain: 'chitty' },
+  'chittyfinance':   { name: 'ChittyFinance',    description: 'Financial forensics, flow-of-funds analysis, and transaction tracking',          domain: 'finance' },
+  'chittyproof':     { name: 'ChittyProof',      description: 'Proof generation and verification for claims and assertions',                    domain: 'proof' },
+  'chittyagent':     { name: 'ChittyAgent',      description: 'Multi-agent orchestration framework for autonomous workflows',                   domain: 'agent' },
+  'chittyledger':    { name: 'ChittyLedger',     description: 'Immutable fact ledger with chain of custody and contradiction detection',        domain: 'ledger' },
+};
+
+function xmlEscape(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 const CONTENT_TYPES: Record<string, string> = {
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
@@ -91,6 +135,41 @@ export default {
     // Only GET/HEAD
     if (request.method !== 'GET' && request.method !== 'HEAD') {
       return new Response('Method Not Allowed', { status: 405 });
+    }
+
+    // Dynamic OG image generation: /og/{service}.svg
+    const ogMatch = path.match(/^\/og\/([a-z]+)\.svg$/);
+    if (ogMatch) {
+      const serviceKey = ogMatch[1];
+      const meta = SERVICES[serviceKey];
+      if (!meta) {
+        return Response.json(
+          { error: 'Unknown service', service: serviceKey, available: Object.keys(SERVICES) },
+          { status: 404, headers: corsHeaders() }
+        );
+      }
+
+      const templateObj = await env.BRAND_ASSETS.get('og-images/og-template.svg');
+      if (!templateObj) {
+        return Response.json(
+          { error: 'OG template not found in R2' },
+          { status: 500, headers: corsHeaders() }
+        );
+      }
+
+      const template = await templateObj.text();
+      const svg = template
+        .replace('{{SERVICE_NAME}}', xmlEscape(meta.name))
+        .replace('{{DESCRIPTION}}', xmlEscape(meta.description))
+        .replace('{{DOMAIN}}', xmlEscape(meta.domain));
+
+      return new Response(svg, {
+        headers: {
+          'Content-Type': 'image/svg+xml',
+          'Cache-Control': `public, max-age=${CACHE_MAX_AGE}`,
+          ...corsHeaders(),
+        },
+      });
     }
 
     // Strip leading slash for R2 key
