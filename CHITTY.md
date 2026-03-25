@@ -20,8 +20,8 @@ ChittyBrand is a static asset repository — no runtime, no deployments. It serv
 ## Stack
 
 - Static SVG, JSON, and Markdown files
-- No build step
-- Assets referenced via GitHub raw URLs or copied into consuming services
+- Cloudflare Worker CDN at `brand.chitty.cc` serving from R2 bucket `chitty-brand-assets`
+- Assets available via CDN (`brand.chitty.cc/{path}`) or GitHub raw URLs
 
 ## Relationship to @chittyos/core/brand
 

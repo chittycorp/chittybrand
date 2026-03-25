@@ -1,0 +1,22 @@
+name = "chittybrand-cdn"
+main = "src/index.ts"
+compatibility_date = "2025-03-20"
+
+# Development
+[vars]
+ENVIRONMENT = "development"
+
+[[r2_buckets]]
+binding = "BRAND_ASSETS"
+bucket_name = "chitty-brand-assets"
+
+# Production
+[env.production]
+route = { pattern = "brand.chitty.cc/*", zone_name = "chitty.cc" }
+
+[env.production.vars]
+ENVIRONMENT = "production"
+
+[[env.production.r2_buckets]]
+binding = "BRAND_ASSETS"
+bucket_name = "chitty-brand-assets"

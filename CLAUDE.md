@@ -2,22 +2,31 @@
 
 ## What This Is
 
-Static brand asset repository for the ChittyOS ecosystem. No code, no build, no deploy.
+Static brand asset repository + CDN worker for the ChittyOS ecosystem.
 
 ## Commands
 
 ```bash
-# None — this is a static asset repo
-# To validate SVGs:
+# Validate SVGs:
 find logos -name "*.svg" -exec xmllint --noout {} \;
+
+# CDN worker (in cdn/ directory):
+cd cdn && npm install
+npm run dev              # Local dev server
+npm run deploy:production # Deploy to brand.chitty.cc
+
+# Sync assets to R2:
+cd cdn && ./scripts/sync-to-r2.sh --env production
 ```
 
 ## Patterns
 
 - Logo filenames: `chittyos-{variant}.svg` (e.g., `chittyos-mark.svg`, `chittyos-wordmark-white.svg`)
+- SVG gradient IDs: `chitty-{variant}-grad` (e.g., `chitty-mark-grad`, `chitty-wm-grad`) — must match `@chittyos/core/brand` inline constants
 - All hex colors uppercase in documentation, lowercase in SVG `style` attributes
 - Design tokens follow W3C Design Tokens Community Group format
 - OG template uses `{{PLACEHOLDER}}` syntax — values MUST be XML-escaped before substitution
+- CDN serves assets at `brand.chitty.cc/{path}` (same paths as repo structure)
 
 ## Adding New Assets
 

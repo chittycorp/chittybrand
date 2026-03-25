@@ -57,3 +57,5 @@ Single source of truth for ChittyOS ecosystem visual identity — logos, design 
 | Badges | `badges/*.svg` | SVG |
 | Tier badge URLs | `badges/tier-badges.md` | Markdown |
 | README template | `templates/README-HEADER.md` | Markdown |
+| CDN worker | `cdn/` | Cloudflare Worker |
+| CDN endpoint | `brand.chitty.cc/*` | HTTPS |
