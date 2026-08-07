@@ -1,6 +1,6 @@
 name = "chittybrand-cdn"
 main = "src/index.ts"
-compatibility_date = "2025-03-20"
+compatibility_date = "2026-08-07"
 
 # Development
 [vars]
@@ -23,3 +23,9 @@ ENVIRONMENT = "production"
 [[env.production.r2_buckets]]
 binding = "BRAND_ASSETS"
 bucket_name = "chitty-brand-assets"
+
+[[tail_consumers]]
+service = "chittytrack"
+
+[observability]
+enabled = true
