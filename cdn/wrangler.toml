@@ -1,6 +1,6 @@
 name = "chittybrand-cdn"
 main = "src/index.ts"
-compatibility_date = "2026-03-16"
+compatibility_date = "2026-08-07"
 
 # Development
 [vars]
